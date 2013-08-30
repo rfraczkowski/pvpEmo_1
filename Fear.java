@@ -1,6 +1,5 @@
 package sim.app.pvpEmo;
 
-import sim.app.pvp.Predator;
 
 public class Fear extends Emotion {
 
