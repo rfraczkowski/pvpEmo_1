@@ -9,7 +9,7 @@ public class Happiness extends Emotion{
 		double reproductionAmount = 1.0 - ((double)p.lastRep/p.maxRep);
 		double socialAmount = 1.0 - ((double)p.lastSocial/p.maxSocial);
 	
-		amount = hungerAmount + reproductionAmount + socialAmount;
+		amount = (hungerAmount + reproductionAmount + socialAmount)/3.0;
 		
 		if(amount > 1.0)
 			amount = 1.0;

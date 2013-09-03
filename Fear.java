@@ -7,13 +7,22 @@ public class Fear extends Emotion {
 		super();
 		type = negative;
 		if(p.getClass().equals(Predator.class))
-			amount = p.lastSeenPrey/p.maxHunger ;
+			amount = (double)p.lastSeenPrey/p.maxHunger ;
+			//System.out.println("LastSeenPrey: " + p.lastSeenPrey);
+			//System.out.println("p.maxHunger: " + p.maxHunger);
+			//System.out.println("amount: " + this.amount);
 			if(amount >1.0)
 				amount = 1.0;
-		else if(p.lastSeenPredator == 0)
+		else if(p.lastSeenPredator == 0){
 			amount = 1.0;
-		else 
+			//System.out.println("JUST SAW PREDATOR!!");
+			}
+		else{ 
 			amount = 1.0 -((double)p.lastSeenPredator/p.maxSeenPredator);
+			//System.out.println("p.lastSeenPredator: " + p.lastSeenPredator);
+			//System.out.println("p.maxSeenPredator: " + p.maxSeenPredator);
+			//System.out.println("ELSE PREY: " + amount);
+			}
 			
 			
 		if(amount > 1.0)

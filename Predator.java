@@ -80,13 +80,13 @@ protected double diseaseRecovery = .25;
 		repRandNum = 1000;
 		
 		 //Chance of Disease recovery
-		 if(this.isDiseased && ((state.schedule.getTime() - diseaseTimestep) > lastMealLow)){
+		/* if(this.isDiseased && ((state.schedule.getTime() - diseaseTimestep) > lastMealLow)){
 			 	double d = state.random.nextInt(diseaseRandomNum);
 				double disease = d/diseaseRandomNum; 
 				
 				if(disease < diseaseRecovery)
 					this.isDiseased = false;
-		 }
+		 }*/
 		 
 		// Timesteps since last social interaction
 		//System.out.println("Last Meal: " + lastMeal + " timesteps");
@@ -244,12 +244,12 @@ protected double diseaseRecovery = .25;
 		double repo = r/repRandNum;
 				
 		assert (r >= 0 && repo >= 0);
-				
-		if(repo <= actualRepRate && age >= repAge){
-			this.lastRep=0;
+		if(repo <= actualRepRate && age >= repAge && numPrey<maxPrey){
 			this.reproduce(state);
+			this.lastRep = 0;
 			return true;
-		}
+			}
+		
 		return false;
 	}
 	

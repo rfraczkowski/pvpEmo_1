@@ -77,13 +77,13 @@ protected double diseaseRecovery = .25;
 	 
 
 	 //Chance of Disease recovery
-	 if(this.isDiseased && ((state.schedule.getTime() - diseaseTimestep) > lastMealLow)){
+	/*if(this.isDiseased && ((state.schedule.getTime() - diseaseTimestep) > lastMealLow)){
 		 	double d = state.random.nextInt(diseaseRandomNum);
 			double disease = d/diseaseRandomNum; 
 			
 			if(disease < diseaseRecovery)
 				this.isDiseased = false;
-	 }
+	 }*/
 		
 	 
 	 //Death Chance
@@ -95,7 +95,7 @@ protected double diseaseRecovery = .25;
 			happy = new Happiness(1, this);
 			surprise = new Surprise(0, this);
 			mood = new Mood(anger, sad, dis, fear, happy);
-		 System.out.print(", " + ID);
+			System.out.print(", " + ID);
 			map.printMaps();
 			System.out.print(", " + lastMeal);
 			System.out.print(", " + lastSocial);

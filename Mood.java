@@ -19,7 +19,7 @@ public class Mood {
 		fear = f;
 		happy = h;
 		
-		double negativeAmount = (anger.amount + sadness.amount + dis.amount + fear.amount)/ 4;
+		double negativeAmount = ((anger.amount + sadness.amount + dis.amount)/6) + (fear.amount/2);
 		double comboAmount = (negativeAmount + happy.amount)/2;
 		
 		if(first)
@@ -27,9 +27,8 @@ public class Mood {
 		else
 			amount = (amount * .75) + (comboAmount * .25);
 		
-		System.out.println("Anger: " + anger.amount + ", Sadness: " + sadness.amount + ", Disgust: " + dis.amount + 
-				", Fear: " + fear.amount + ", Happiness: " + happy.amount);
-		System.out.println("Mood: " + amount);
-		
+		System.out.println(", Anger: " + anger.amount + ", Sadness: " + sadness.amount + ", Disgust: " + dis.amount + 
+				", Fear: " + fear.amount + ", Happiness: " + happy.amount + ", Mood: " + amount);
+	
 	}
 }
