@@ -97,7 +97,7 @@ public class BehaviorProcessor {
 		//two sides reduced by one fourth, goes to location around reward
 		
 		this.rewardProbability(fLocations, newProb, oldProb, predator);
-		this.rewardProbability(sLocations, newProb, oldProb, predator);
+		//this.rewardProbability(sLocations, newProb, oldProb, predator);
 		this.emotions(predator);
 		
 		return newProb;
@@ -1092,11 +1092,8 @@ public class BehaviorProcessor {
 			p.velocity = 2;
 		else if(surpriseAmount == 1.0)
 			p.velocity = 0;
-		else{
-			int velocity = (int)p.mood.amount * 2;
-			if(velocity > 0)
-				p.velocity = velocity;
-		}
+		else
+			p.velocity = (int)p.mood.amount * 2;
 		//Mood as velocity
 	}
 	

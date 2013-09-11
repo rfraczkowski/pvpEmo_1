@@ -16,7 +16,7 @@ public class PVPEmo extends SimState{
 	private static int gridHeight;
 	private final int gridArea;
 	//Rates and Numbers
-	private final double foodPopRate = .4;
+	private final double foodPopRate = .6;
 	private static int numPred;
 	private static int numPrey;
 	private static double expectationMapDecay;

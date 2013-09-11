@@ -119,7 +119,7 @@ public class Food implements Steppable {
 	}
 	
 	public void eat(){
-		amount = amount - .7;
+		amount = amount - .1;
 		if(amount <0){
 			//amount = 0.0;
 			//may be a point where it is being removed, but not stopped.

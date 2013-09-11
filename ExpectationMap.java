@@ -108,19 +108,19 @@ public class ExpectationMap {
 		double gArea = (double) gWidth * gHeight;
 		double foodNonZero = nonZeroF/gArea;
 		double foodMemory = memoryValueF/gArea;
-		System.out.print(", " + foodNonZero + ", " + foodMemory);
+		System.out.print(", FoodNonZero%: " + foodNonZero + ", MemoryValue: " + foodMemory);
 		
 		double conspecificNonZero = nonZeroC/gArea;
 		double conspecificMemory = memoryValueC/gArea;
-		System.out.print(", " + conspecificNonZero + ", " + conspecificMemory);
+		System.out.print(", FoodNonZero%: " + conspecificNonZero + ", Memory Value: " + conspecificMemory);
 		
 		double predatorNonZero = nonZeroP/gArea;
 		double predatorMemory = memoryValueP/gArea;
-		System.out.print(", " + predatorNonZero + ", " + predatorMemory);
+		System.out.print(", FoodNonZero%: " + predatorNonZero + ", MemoryValue: " + predatorMemory);
 		
 		double poisonNonZero = nonZeroX/gArea;
 		double poisonMemory = memoryValueX/gArea;
-		System.out.print(", " + poisonNonZero + ", " + poisonMemory);
+		System.out.print(", PoisonNonZero%: " + poisonNonZero + ", MemoryValue: " + poisonMemory);
 	}
 	
 	

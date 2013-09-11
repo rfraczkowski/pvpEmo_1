@@ -4,30 +4,40 @@ import sim.engine.*;
 import sim.field.grid.SparseGrid2D;
 import sim.util.Bag;
 import sim.util.Int2D;
-
+/*
+ * File: Predator.java
+ * Programmer: Rachel Fraczkowski
+ * Purpose: Predator Agent
+ */
 public class Predator extends Animal implements Steppable{
 
+//Death Rate and Modulators
 private static int oldAge;
 private static double defaultDeathRate;
 private double actualDeathRate;
 private static int deathRandNum;
 private static double agingDeathMod;
+//Hunger Rate and Modulators
 private static double hungerDeathMod;
 private static int lastMealLow;
 private static int lastMealMed;
 private static int lastMealHigh;
+protected int eatingChance;
+//Reproduction Modulators
 private static int repAge;
 protected static int repRandNum;
 protected static int defaultRepRandNum;
-protected int eatingChance;
 private static double actualRepRate;
 private static double defaultRepRate;
-private Bag seen;
+//Disease Modulator
 protected double diseaseRecovery = .25;
 
 
 
-	
+	/*Constructor for Predator
+	 * Takes state of world, grid for Predator to be placed, and a number for ID
+	 * Purpose: Assigns certain data members and initializes Map and processors
+	 */
 	Predator(SimState state, SparseGrid2D grid, int num){
 		
 		int directionNum= state.random.nextInt(3);
@@ -78,7 +88,7 @@ protected double diseaseRecovery = .25;
 		super.step(state);
 		
 		repRandNum = 1000;
-		
+		//System.out.println();
 		 //Chance of Disease recovery
 		/* if(this.isDiseased && ((state.schedule.getTime() - diseaseTimestep) > lastMealLow)){
 			 	double d = state.random.nextInt(diseaseRandomNum);
@@ -102,10 +112,10 @@ protected double diseaseRecovery = .25;
 			mood = new Mood(anger, sad, dis, fear, happy);
 			System.out.print(", " + ID);
 			map.printMaps();
-			System.out.print(", LASTMEAL: " + lastMeal);
-			System.out.print(", " + actualDeathRate);
-			System.out.print(", " + lastSocial);
-			System.out.print(", " + directChangeTotal + "\n");
+			System.out.print(", lastMeal: " + lastMeal);
+			System.out.print(", deathRate " + actualDeathRate);
+			System.out.print(", lastSocial: " + lastSocial);
+			System.out.print(", directionChange: " + directChangeTotal + "\n");
 			return;
 		}
 		
@@ -120,10 +130,10 @@ protected double diseaseRecovery = .25;
 			mood = new Mood(anger, sad, dis, fear, happy);
 			System.out.print(", " + ID);
 			map.printMaps();
-			System.out.print(", LASTMEAL: " + lastMeal);
-			System.out.print(", " + actualDeathRate);
-			System.out.print(", " + lastSocial);
-			System.out.print(", " + directChangeTotal + "\n");
+			System.out.print(", lastMeal: " + lastMeal);
+			System.out.print(", deathRate " + actualDeathRate);
+			System.out.print(", lastSocial: " + lastSocial);
+			System.out.print(", directionChange: " + directChangeTotal + "\n");
 			return;
 		}
 		
@@ -138,10 +148,10 @@ protected double diseaseRecovery = .25;
 			mood = new Mood(anger, sad, dis, fear, happy);
 			System.out.print(", " + ID);
 			map.printMaps();
-			System.out.print(", LASTMEAL: " + lastMeal);
-			System.out.print(", " + actualDeathRate);
-			System.out.print(", " + lastSocial);
-			System.out.print(", " + directChangeTotal);
+			System.out.print(", lastMeal: " + lastMeal);
+			System.out.print(", deathRate " + actualDeathRate);
+			System.out.print(", lastSocial: " + lastSocial);
+			System.out.print(", directionChange: " + directChangeTotal);
 			System.out.print(", " + "Predator Ate" + "\n");
 			return;
 		}
@@ -166,10 +176,10 @@ protected double diseaseRecovery = .25;
 		//End of Step, print out tests
 		System.out.print(", " + ID);
 		map.printMaps();
-		System.out.print(", LASTMEAL: " + lastMeal);
-		System.out.print(", " + actualDeathRate);
-		System.out.print(", " + lastSocial);
-		System.out.print(", " + directChangeTotal + "\n");
+		System.out.print(", lastMeal: " + lastMeal);
+		System.out.print(", deathRate " + actualDeathRate);
+		System.out.print(", lastSocial: " + lastSocial);
+		System.out.print(", directionChange: " + directChangeTotal + "\n");
 		
 
 	}

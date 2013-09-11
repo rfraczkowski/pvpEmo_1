@@ -51,6 +51,7 @@ public abstract class Animal implements Steppable {
 	protected Bag allObjects = new Bag();
 	protected double diseaseTimestep;
 	protected int diseaseRandomNum = 100;
+	protected Bag seen;
 	
 	protected final static void initialize(int prey, int pred, double exMap){
 		numPrey = prey;

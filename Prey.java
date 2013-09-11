@@ -25,7 +25,6 @@ protected int eatingChance;
 private static int repAge;
 private static double defaultRepRate;
 private static double actualRepRate;
-private Bag seen;
 protected double diseaseRecovery = .25;
 
 	
@@ -75,7 +74,7 @@ protected double diseaseRecovery = .25;
 	public void step(SimState state) {
 	 super.step(state);
 	 
-
+	 //System.out.println();
 	 //Chance of Disease recovery
 	/*if(this.isDiseased && ((state.schedule.getTime() - diseaseTimestep) > lastMealLow)){
 		 	double d = state.random.nextInt(diseaseRandomNum);
@@ -97,9 +96,10 @@ protected double diseaseRecovery = .25;
 			mood = new Mood(anger, sad, dis, fear, happy);
 			System.out.print(", " + ID);
 			map.printMaps();
-			System.out.print(", " + lastMeal);
-			System.out.print(", " + lastSocial);
-			System.out.print(", " + directChangeTotal + "\n");
+			System.out.print(", lastMeal: " + lastMeal);
+			System.out.print(", deathRate " + actualDeathRate);
+			System.out.print(", lastSocial: " + lastSocial);
+			System.out.print(", directionChange: " + directChangeTotal + "\n");
 		 return;
 	 }
 	 //Reproduction Chance
@@ -113,9 +113,10 @@ protected double diseaseRecovery = .25;
 			mood = new Mood(anger, sad, dis, fear, happy);
 		 System.out.print(", " + ID);
 			map.printMaps();
-			System.out.print(", " + lastMeal);
-			System.out.print(", " + lastSocial);
-			System.out.print(", " + directChangeTotal + "\n");
+			System.out.print(", lastMeal: " + lastMeal);
+			System.out.print(", deathRate " + actualDeathRate);
+			System.out.print(", lastSocial: " + lastSocial);
+			System.out.print(", directionChange: " + directChangeTotal + "\n");
 		 return;
 	 }
 	 //Chance of Eating
@@ -127,12 +128,13 @@ protected double diseaseRecovery = .25;
 			happy = new Happiness(1, this);
 			surprise = new Surprise(0, this);
 			mood = new Mood(anger, sad, dis, fear, happy);
-		 System.out.print(", " + ID);
+			System.out.print(", " + ID);
 			map.printMaps();
-			System.out.print(", " + lastMeal);
-			System.out.print(", " + lastSocial);
-			System.out.print(", " + directChangeTotal);
-			System.out.print(", " + "Prey ate" + "\n");
+			System.out.print(", lastMeal: " + lastMeal);
+			System.out.print(", deathRate " + actualDeathRate);
+			System.out.print(", lastSocial: " + lastSocial);
+			System.out.print(", directionChange: " + directChangeTotal + "\n");
+			System.out.print(", Prey ate.");
 		return;
 	 }
 	 //See & process
@@ -149,9 +151,10 @@ protected double diseaseRecovery = .25;
 	//End of Step, print out tests
 			System.out.print(", " + ID);
 			map.printMaps();
-			System.out.print(", " + lastMeal);
-			System.out.print(", " + lastSocial);
-			System.out.print(", " + directChangeTotal + "\n");
+			System.out.print(", lastMeal: " + lastMeal);
+			System.out.print(", deathRate " + actualDeathRate);
+			System.out.print(", lastSocial: " + lastSocial);
+			System.out.print(", directionChange: " + directChangeTotal + "\n");
 	}
 	
 	//Method which determines whether or not the Prey will eat on location.

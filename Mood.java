@@ -27,7 +27,7 @@ public class Mood {
 		else
 			amount = (amount * .75) + (comboAmount * .25);
 		
-		System.out.println(", Anger: " + anger.amount + ", Sadness: " + sadness.amount + ", Disgust: " + dis.amount + 
+		System.out.print(", Anger: " + anger.amount + ", Sadness: " + sadness.amount + ", Disgust: " + dis.amount + 
 				", Fear: " + fear.amount + ", Happiness: " + happy.amount + ", Mood: " + amount);
 	
 	}
