@@ -29,10 +29,6 @@ public class PVPEmo extends SimState{
 	public PVPEmo(long seed)
 	{
 		super(seed);
-		//gridWidth = 10;
-		//gridHeight = 10;
-		//numPred = 2;
-		//numPrey = 10;
 		clusters = 20;
 		gridArea = (gridWidth*gridHeight);
 		numFood = (int) (gridArea * foodPopRate);

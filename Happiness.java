@@ -1,9 +1,16 @@
 package sim.app.pvpEmo;
 
-public class Happiness extends Emotion{
-	Happiness(int positive, Animal p){
-		super();
-		type = positive;
+public class Happiness extends Emotion
+{
+	Happiness(Animal p)
+	{
+		type = 1;
+		updateHappiness(p);
+	}
+	
+	protected Happiness updateHappiness(Animal p)
+	{
+		
 		//Lack of hunger, reproduction, and social
 		double hungerAmount = 1.0 - ((double)p.lastMeal/ p.maxHunger);
 		double reproductionAmount = 1.0 - ((double)p.lastRep/p.maxRep);
@@ -16,6 +23,8 @@ public class Happiness extends Emotion{
 		if(amount < 0)
 			amount = 0.0;
 		//System.out.println("Happiness: " + amount);
+		
+		return this;
 			
 	}
 }

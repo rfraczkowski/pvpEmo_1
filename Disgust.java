@@ -1,10 +1,16 @@
 package sim.app.pvpEmo;
 
-public class Disgust extends Emotion{
+public class Disgust extends Emotion
+{
 
-	Disgust(int negative, Animal p){
-		super();
-		type = negative;
+	protected Disgust(Animal p)
+	{
+		type = -1;
+		updateDisgust(p);
+	}
+	
+	protected Disgust updateDisgust(Animal p)
+	{
 		if(p.isDiseased)
 			amount = 1.0;
 		else
@@ -13,5 +19,7 @@ public class Disgust extends Emotion{
 		/*if(amount != 0.0)
 			System.out.println("***************************************************");*/
 		//System.out.println("Disgust: " + amount);
+		
+		return this;
 	}
 }

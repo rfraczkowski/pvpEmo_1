@@ -23,13 +23,13 @@ public abstract class Animal implements Steppable {
 	public final static int WEST = 3;
 	public static int numPrey;
 	public static int numPredator;
-	protected Anger anger;
-	protected Sadness sad;
-	protected Disgust dis;
-	protected Fear fear;
-	protected Happiness happy;
-	protected Surprise surprise;
-	protected Mood mood;
+	protected Anger anger = new Anger(this);
+	protected Sadness sad = new Sadness(this);
+	protected Disgust dis = new Disgust(this);
+	protected Fear fear = new Fear(this);
+	protected Happiness happy = new Happiness(this);
+	protected Surprise surprise = new Surprise(this);
+	protected Mood mood = new Mood(anger, sad, dis, fear, happy);;
 	protected int reproductionAge;
 	protected static double expectMapDecayRate;
 	protected int velocity = 1;
@@ -44,14 +44,14 @@ public abstract class Animal implements Steppable {
 	protected int lastRep;
 	protected int maxRep;
 	protected static int maxSocial;
-	protected static int maxPrey = 150;
+	protected static int maxPrey = 300;
+	protected static int maxPredator = 300;
 	protected int lastSocial = 0;
 	protected int directChangeTotal = 0;
 	protected String ID;
 	protected Bag allObjects = new Bag();
 	protected double diseaseTimestep;
 	protected int diseaseRandomNum = 100;
-	protected Bag seen;
 	
 	protected final static void initialize(int prey, int pred, double exMap){
 		numPrey = prey;
@@ -73,6 +73,7 @@ public abstract class Animal implements Steppable {
 		maxSeenPredator = 30;
 		//Start of every step uses default movement
 		actualProb = defaultProb;
+		velocity= 1;
 		vP = new VisualProcessor(state);
 		 
 		

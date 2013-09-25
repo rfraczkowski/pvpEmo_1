@@ -10,7 +10,13 @@ public class Mood {
 	Happiness happy;
 	boolean first;
 	
-	Mood(Anger a, Sadness sad, Disgust d, Fear f, Happiness h){
+	protected Mood(Anger a, Sadness sad, Disgust d, Fear f, Happiness h)
+	{
+		updateMood(a, sad, d, f, h);
+	}
+	
+	protected Mood updateMood(Anger a, Sadness sad, Disgust d, Fear f, Happiness h)
+	{
 		if(anger == null)
 			first = true;
 		anger = a;
@@ -27,8 +33,9 @@ public class Mood {
 		else
 			amount = (amount * .75) + (comboAmount * .25);
 		
-		System.out.print(", Anger: " + anger.amount + ", Sadness: " + sadness.amount + ", Disgust: " + dis.amount + 
-				", Fear: " + fear.amount + ", Happiness: " + happy.amount + ", Mood: " + amount);
+		/*System.out.print(", Anger: " + anger.amount + ", Sadness: " + sadness.amount + ", Disgust: " + dis.amount + 
+				", Fear: " + fear.amount + ", Happiness: " + happy.amount + ", Mood: " + amount);*/
 	
+		return this;
 	}
 }

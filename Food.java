@@ -13,7 +13,7 @@ public class Food implements Steppable {
 	private double repPr = .0005;
 	private int repRandNum = 10000;
 	private boolean diseased = false;
-	private double regrowthRate = .025;
+	private double regrowthRate = .03;
 	public SparseGrid2D grid;
 	protected Stoppable stop;
 

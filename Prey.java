@@ -25,6 +25,7 @@ protected int eatingChance;
 private static int repAge;
 private static double defaultRepRate;
 private static double actualRepRate;
+private Bag seen;
 protected double diseaseRecovery = .25;
 
 	
@@ -76,85 +77,40 @@ protected double diseaseRecovery = .25;
 	 
 	 //System.out.println();
 	 //Chance of Disease recovery
-	/*if(this.isDiseased && ((state.schedule.getTime() - diseaseTimestep) > lastMealLow)){
+	if(this.isDiseased && ((state.schedule.getTime() - diseaseTimestep) > lastMealLow)){
 		 	double d = state.random.nextInt(diseaseRandomNum);
 			double disease = d/diseaseRandomNum; 
 			
 			if(disease < diseaseRecovery)
 				this.isDiseased = false;
-	 }*/
+	 }
 		
 	 
 	 //Death Chance
 	 if(this.iDie(state)){
-		 	anger = new Anger(-1, this);
-			sad = new Sadness(-1, this);
-			dis = new Disgust(-1, this);
-			fear = new Fear (-1, this);
-			happy = new Happiness(1, this);
-			surprise = new Surprise(0, this);
-			mood = new Mood(anger, sad, dis, fear, happy);
-			System.out.print(", " + ID);
-			map.printMaps();
-			System.out.print(", lastMeal: " + lastMeal);
-			System.out.print(", deathRate " + actualDeathRate);
-			System.out.print(", lastSocial: " + lastSocial);
-			System.out.print(", directionChange: " + directChangeTotal + "\n");
+		 	this.updateEmotions();
+			this.printStats();
 		 return;
 	 }
 	 //Reproduction Chance
 	 else if(this.iReproduce(state)){
-		 	anger = new Anger(-1, this);
-			sad = new Sadness(-1, this);
-			dis = new Disgust(-1, this);
-			fear = new Fear (-1, this);
-			happy = new Happiness(1, this);
-			surprise = new Surprise(0, this);
-			mood = new Mood(anger, sad, dis, fear, happy);
-		 System.out.print(", " + ID);
-			map.printMaps();
-			System.out.print(", lastMeal: " + lastMeal);
-			System.out.print(", deathRate " + actualDeathRate);
-			System.out.print(", lastSocial: " + lastSocial);
-			System.out.print(", directionChange: " + directChangeTotal + "\n");
+		 	this.updateEmotions();
+		   this.printStats();
 		 return;
 	 }
 	 //Chance of Eating
 	 else if(this.willEat(grid, state)){
-		 	anger = new Anger(-1, this);
-			sad = new Sadness(-1, this);
-			dis = new Disgust(-1, this);
-			fear = new Fear (-1, this);
-			happy = new Happiness(1, this);
-			surprise = new Surprise(0, this);
-			mood = new Mood(anger, sad, dis, fear, happy);
-			System.out.print(", " + ID);
-			map.printMaps();
-			System.out.print(", lastMeal: " + lastMeal);
-			System.out.print(", deathRate " + actualDeathRate);
-			System.out.print(", lastSocial: " + lastSocial);
-			System.out.print(", directionChange: " + directChangeTotal + "\n");
-			System.out.print(", Prey ate.");
+		 	//this.updateEmotions();
+			this.printStats();
 		return;
 	 }
 	 //See & process
 	 else 
 		 this.vision(state, grid);
 		
-	 	anger = new Anger(-1, this);
-		sad = new Sadness(-1, this);
-		dis = new Disgust(-1, this);
-		fear = new Fear (-1, this);
-		happy = new Happiness(1, this);
-		surprise = new Surprise(0, this);
-		mood = new Mood(anger, sad, dis, fear, happy);
+	  	this.updateEmotions();
 	//End of Step, print out tests
-			System.out.print(", " + ID);
-			map.printMaps();
-			System.out.print(", lastMeal: " + lastMeal);
-			System.out.print(", deathRate " + actualDeathRate);
-			System.out.print(", lastSocial: " + lastSocial);
-			System.out.print(", directionChange: " + directChangeTotal + "\n");
+			this.printStats();
 	}
 	
 	//Method which determines whether or not the Prey will eat on location.
@@ -235,8 +191,8 @@ protected double diseaseRecovery = .25;
 	 		//actualDeathRate = actualDeathRate * agingDeathMod;
 	 	
 	 	//Last meal, more likely to die
-	 	if(lastMeal > lastMealMed)
-			actualDeathRate = actualDeathRate * hungerDeathMod;
+	 	if(lastMeal > lastMealLow)
+			actualDeathRate = actualDeathRate * (hungerDeathMod);
 		/*//System.out.println("deathRate: " + deathRate);
 	 	
 	 	if(lastMeal > lastMealHigh){
@@ -264,7 +220,7 @@ protected double diseaseRecovery = .25;
 	// Reproduction Rate
 		double r = state.random.nextInt(repRandNum);
 		double repo = r/repRandNum;
-		if(repo <= actualRepRate && age >= repAge && numPrey<maxPrey){
+		if(repo <= actualRepRate && age >= repAge && numPrey <= maxPrey){
 			this.reproduce(state);
 			return true;
 			}
@@ -315,4 +271,24 @@ protected double diseaseRecovery = .25;
 		actualRepRate = repRate;
 	}
 	
+	public void updateEmotions()
+	{
+		anger = anger.updateAnger(this);
+		sad = sad.updateSadness(this);
+		dis = dis.updateDisgust(this);
+		fear = fear.updateFear(this);
+		happy = happy.updateHappiness(this);
+		surprise = surprise.updateSurprise(this);
+		mood = mood.updateMood(anger, sad, dis, fear, happy);
+	}
+	
+	public void printStats()
+	{
+		System.out.print(", " + ID);
+		map.printMaps();
+		System.out.print(", lastMeal: " + lastMeal);
+		System.out.print(", deathRate " + actualDeathRate);
+		System.out.print(", lastSocial: " + lastSocial);
+		System.out.print(", directionChange: " + directChangeTotal + "\n");
+	}
 }

@@ -3,9 +3,14 @@ package sim.app.pvpEmo;
 
 public class Fear extends Emotion {
 
-	Fear(int negative, Animal p){
-		super();
-		type = negative;
+	Fear(Animal p)
+	{
+		type = -1;
+		updateFear(p);
+	}
+	
+	protected Fear updateFear(Animal p)
+	{
 		if(p.getClass().equals(Predator.class))
 			amount = (double)p.lastSeenPrey/p.maxHunger ;
 			//System.out.println("LastSeenPrey: " + p.lastSeenPrey);
@@ -30,5 +35,7 @@ public class Fear extends Emotion {
 		if(amount < 0)
 			amount = 0.0;
 		//System.out.println("Fear: " + amount);
+		
+		return this;
 	}
 }

@@ -1,13 +1,20 @@
 package sim.app.pvpEmo;
 
 
-public class Surprise extends Emotion{
+public class Surprise extends Emotion
+{
 	
 	protected double surpriseRate = .1;
-	Surprise(int neutral, Animal p){
-		super();
-		type = neutral;
-		
+	
+	Surprise(Animal p)
+	{
+		type = 0;
+		//updateSurprise(p);
+	}
+	
+	protected Surprise updateSurprise(Animal p)
+	{
 		amount = amount + (surpriseRate * p.map.surpriseIncrease);
+		return this;
 	}
 }

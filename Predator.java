@@ -4,40 +4,30 @@ import sim.engine.*;
 import sim.field.grid.SparseGrid2D;
 import sim.util.Bag;
 import sim.util.Int2D;
-/*
- * File: Predator.java
- * Programmer: Rachel Fraczkowski
- * Purpose: Predator Agent
- */
+
 public class Predator extends Animal implements Steppable{
 
-//Death Rate and Modulators
 private static int oldAge;
 private static double defaultDeathRate;
 private double actualDeathRate;
 private static int deathRandNum;
 private static double agingDeathMod;
-//Hunger Rate and Modulators
 private static double hungerDeathMod;
 private static int lastMealLow;
 private static int lastMealMed;
 private static int lastMealHigh;
-protected int eatingChance;
-//Reproduction Modulators
 private static int repAge;
 protected static int repRandNum;
 protected static int defaultRepRandNum;
+protected int eatingChance;
 private static double actualRepRate;
 private static double defaultRepRate;
-//Disease Modulator
+private Bag seen;
 protected double diseaseRecovery = .25;
 
 
 
-	/*Constructor for Predator
-	 * Takes state of world, grid for Predator to be placed, and a number for ID
-	 * Purpose: Assigns certain data members and initializes Map and processors
-	 */
+	
 	Predator(SimState state, SparseGrid2D grid, int num){
 		
 		int directionNum= state.random.nextInt(3);
@@ -90,96 +80,48 @@ protected double diseaseRecovery = .25;
 		repRandNum = 1000;
 		//System.out.println();
 		 //Chance of Disease recovery
-		/* if(this.isDiseased && ((state.schedule.getTime() - diseaseTimestep) > lastMealLow)){
+		 if(this.isDiseased && ((state.schedule.getTime() - diseaseTimestep) > lastMealLow)){
 			 	double d = state.random.nextInt(diseaseRandomNum);
 				double disease = d/diseaseRandomNum; 
 				
 				if(disease < diseaseRecovery)
 					this.isDiseased = false;
-		 }*/
+		 }
 		 
 		// Timesteps since last social interaction
 		//System.out.println("Last Meal: " + lastMeal + " timesteps");
 		
 		//Death Calculations
 		if(this.iDie(state)){
-			anger = new Anger(-1, this);
-			sad = new Sadness(-1, this);
-			dis = new Disgust(-1, this);
-			fear = new Fear (-1, this);
-			happy = new Happiness(1, this);
-			surprise = new Surprise(0, this);
-			mood = new Mood(anger, sad, dis, fear, happy);
-			System.out.print(", " + ID);
-			map.printMaps();
-			System.out.print(", lastMeal: " + lastMeal);
-			System.out.print(", deathRate " + actualDeathRate);
-			System.out.print(", lastSocial: " + lastSocial);
-			System.out.print(", directionChange: " + directChangeTotal + "\n");
+		 	this.emotionsUpdate();
+			this.printStats();
 			return;
 		}
 		
 		//Reproduction Calculations
 		else if(this.iReproduce(state)){
-			anger = new Anger(-1, this);
-			sad = new Sadness(-1, this);
-			dis = new Disgust(-1, this);
-			fear = new Fear (-1, this);
-			happy = new Happiness(1, this);
-			surprise = new Surprise(0, this);
-			mood = new Mood(anger, sad, dis, fear, happy);
-			System.out.print(", " + ID);
-			map.printMaps();
-			System.out.print(", lastMeal: " + lastMeal);
-			System.out.print(", deathRate " + actualDeathRate);
-			System.out.print(", lastSocial: " + lastSocial);
-			System.out.print(", directionChange: " + directChangeTotal + "\n");
+		 	this.emotionsUpdate();
+
+			//this.printStats();
 			return;
 		}
 		
 		//Will I eat?
 		else if(this.willEat(grid, state)){
-			anger = new Anger(-1, this);
-			sad = new Sadness(-1, this);
-			dis = new Disgust(-1, this);
-			fear = new Fear (-1, this);
-			happy = new Happiness(1, this);
-			surprise = new Surprise(0, this);
-			mood = new Mood(anger, sad, dis, fear, happy);
-			System.out.print(", " + ID);
-			map.printMaps();
-			System.out.print(", lastMeal: " + lastMeal);
-			System.out.print(", deathRate " + actualDeathRate);
-			System.out.print(", lastSocial: " + lastSocial);
-			System.out.print(", directionChange: " + directChangeTotal);
-			System.out.print(", " + "Predator Ate" + "\n");
+		 	this.emotionsUpdate();
+			this.printStats();
 			return;
 		}
 		
 		//Visual Processor
 		else{
-		
-			anger = new Anger(-1, this);
-			sad = new Sadness(-1, this);
-			dis = new Disgust(-1, this);
-			fear = new Fear (-1, this);
-			happy = new Happiness(1, this);
-			surprise = new Surprise(0, this);
-			mood = new Mood(anger, sad, dis, fear, happy);
+			this.emotionsUpdate();
 			this.vision(state, grid);
 		
 		}
-			
-		
 	
-		
 		//End of Step, print out tests
-		System.out.print(", " + ID);
-		map.printMaps();
-		System.out.print(", lastMeal: " + lastMeal);
-		System.out.print(", deathRate " + actualDeathRate);
-		System.out.print(", lastSocial: " + lastSocial);
-		System.out.print(", directionChange: " + directChangeTotal + "\n");
+		this.printStats();
 		
 
 	}
@@ -203,8 +145,6 @@ protected double diseaseRecovery = .25;
 			grid.remove(prey);
 			//System.out.println("Prey was eaten by Predator");
 
-	
-			
 		}
 			
 	}
@@ -219,7 +159,7 @@ protected double diseaseRecovery = .25;
 		 	
 		 //Last meal, more likely to die
 		 if(lastMeal > lastMealMed)
-			actualDeathRate = actualDeathRate * hungerDeathMod;
+			actualDeathRate = actualDeathRate * (hungerDeathMod);
 		 
 		/*//System.out.println("deathRate: " + deathRate);
 		 if(lastMeal > lastMealHigh){
@@ -254,7 +194,7 @@ protected double diseaseRecovery = .25;
 		double repo = r/repRandNum;
 				
 		assert (r >= 0 && repo >= 0);
-		if(repo <= actualRepRate && age >= repAge && numPrey<maxPrey){
+		if(repo <= actualRepRate && age >= repAge && numPredator<=maxPredator){
 			this.reproduce(state);
 			this.lastRep = 0;
 			return true;
@@ -264,7 +204,7 @@ protected double diseaseRecovery = .25;
 	}
 	
 	public boolean willEat(SparseGrid2D grid, SimState state){
-		
+				
 		if(lastMeal < lastMealLow)
 			actualRepRate = actualRepRate * 1.5;
 		
@@ -282,8 +222,9 @@ protected double diseaseRecovery = .25;
 			
 			for(int i = 0; i < gridNum; i++){
 				Object obj = (grid.getObjectsAtLocationOfObject(this)).get(i);
+				
 				if(obj.getClass().equals(Prey.class)){
-					//System.out.println("Predator Ate");
+					//System.out.println("\nPredator Ate");
 					this.eat(obj, state);
 					return true;
 				}// end of if
@@ -348,5 +289,27 @@ protected double diseaseRecovery = .25;
 	
 	public void setRepRate(double repRate){
 		actualRepRate = repRate;
+	}
+	
+	public void emotionsUpdate()
+	{
+		anger = anger.updateAnger(this);
+		sad = sad.updateSadness(this);
+		dis = dis.updateDisgust(this);
+		fear = fear.updateFear(this);
+		happy = happy.updateHappiness(this);
+		surprise = surprise.updateSurprise(this);
+		mood = mood.updateMood(anger, sad, dis, fear, happy);
+	}
+	
+	public void printStats()
+	{
+		System.out.print(", " + ID);
+		map.printMaps();
+		System.out.print(", lastMeal: " + lastMeal);
+		System.out.print(", deathRate " + actualDeathRate);
+		System.out.print(", lastSocial: " + lastSocial);
+		System.out.print(", directionChange: " + directChangeTotal + "\n");
+		
 	}
 }

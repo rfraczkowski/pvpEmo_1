@@ -127,32 +127,31 @@ public class PVPEmoWithUI extends GUIState {
 	
 	   public void init(Controller c)
        {
-       super.init(c);
-       
-       display = new Display2D(worldWidth,worldHeight,this);
-       display.setClipping(false);
-       
-       displayFrame = display.createFrame();
-       displayFrame.setTitle("Predator vs. Prey");
-       c.registerFrame(displayFrame);
-       displayFrame.setVisible(true);
-       display.setBackdrop(Color.gray);
-       display.attach(worldPortrayal,"Grid");
-   
+	       super.init(c);
+	       
+	       display = new Display2D(worldWidth,worldHeight,this);
+	       display.setClipping(false);
+	       
+	       displayFrame = display.createFrame();
+	       displayFrame.setTitle("Predator vs. Prey");
+	       c.registerFrame(displayFrame);
+	       displayFrame.setVisible(true);
+	       display.setBackdrop(Color.gray);
+	       display.attach(worldPortrayal,"Grid");
        
        }
 	   
-	    public Object getSimulationInspectedObject()
-        {
-        return state;
-        }
+	   public Object getSimulationInspectedObject()
+       {
+		   return state;
+       }
 
 	    
 	    public Inspector getInspector()
         {
-        Inspector i = super.getInspector();
-        i.setVolatile(true);
-        return i;
+	        Inspector i = super.getInspector();
+	        i.setVolatile(true);
+	        return i;
         }
     
     public void quit()

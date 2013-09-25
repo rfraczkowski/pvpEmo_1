@@ -166,7 +166,7 @@ public class BehaviorProcessor {
 		this.rewardProbability(sLocations, newProb, oldProb, prey);
 		this.avoidanceProbability(pLocations, newProb, oldProb, prey);
 		
-		
+		this.emotions(prey);
 		return newProb;
 	
 	}
@@ -1037,7 +1037,7 @@ public class BehaviorProcessor {
 			newProb[adjOpposite1Index] = 0;
 			newProb[adjOpposite2Index] = 0;
 			//updating probability reduction
-			
+				
 			
 			oldRewardLoc.add(predatorLoc);
 			
@@ -1069,34 +1069,39 @@ public class BehaviorProcessor {
 		double fearAmount = p.fear.amount;
 		double disgustAmount = p.dis.amount;
 		double surpriseAmount = p.surprise.amount;
+		double happinessAmount = p.happy.amount;
 		
 		//System.out.println("EatingChance Before: " + p.eatingChance);
 		//System.out.println("RepNum Before: " + p.repRandNum);
 		int fearRepNum = p.repRandNum*(int)(fearAmount *100);
 		int disgustRepNum = p.repRandNum*(int)(disgustAmount * 100);
-		int averageRepNum= (fearRepNum + disgustRepNum)/20;
+		int averageNegRepNum= (fearRepNum + disgustRepNum)/20;
+		
+		int happinessRepNum = p.repRandNum*(int)(happinessAmount * 100);
+		
+		int averageRepNum = (averageNegRepNum + happinessRepNum)/2;
 		//System.out.println("AverageRepNum" + averageRepNum);
 		if(averageRepNum > 0)
 			p.repRandNum = averageRepNum;
 		
 		
 		//Eating
-		double eatingChance = 1.0 - disgustAmount;
+		double eatingChance = 1.0 - (.0001 * disgustAmount);
 		p.eatingChance = (int)eatingChance;
 		
 		//System.out.println("EatingChance After: " + p.eatingChance);
 		//System.out.println("RepNum After: " + p.repRandNum);
 		
 		//Velocity
-		if(fearAmount >= .5)
+		/*if(fearAmount >= .5)
 			p.velocity = 2;
 		else if(surpriseAmount == 1.0)
 			p.velocity = 0;
 		else{
-			int velocity = (int)p.mood.amount * 2;
-			if(velocity > 0)
-				p.velocity = velocity;
-		}
+			//int velocity = (int)p.mood.amount * 2;
+			//if(velocity > 0)
+				//p.velocity = velocity;
+		}*/
 		//Mood as velocity
 	}
 	
@@ -1106,6 +1111,7 @@ public class BehaviorProcessor {
 		
 		double fearAmount = p.fear.amount;
 		double disgustAmount = p.dis.amount;
+		double surpriseAmount = p.surprise.amount;
 		
 		//System.out.println("EatingChance Before: " + p.eatingChance);
 		//System.out.println("RepNum Before: " + p.repRandNum);
@@ -1118,11 +1124,22 @@ public class BehaviorProcessor {
 		
 		
 		//Eating
-		double eatingChance = 1.0 - disgustAmount;
+		double eatingChance = 1.0 - (.0001 * disgustAmount);
 		p.eatingChance = (int)eatingChance;
 		
 		//System.out.println("EatingChance After: " + p.eatingChance);
 		//System.out.println("RepNum After: " + p.repRandNum);
+		//Velocity
+		
+		if(fearAmount >= .5)
+			p.velocity = 2;
+		else if(surpriseAmount == 1.0)
+			p.velocity = 0;
+		else{
+			//int velocity = (int)p.mood.amount * 2;
+			//if(velocity > 0)
+				//p.velocity = velocity;
+		}
 	}
 	
 	public void updateEmotionState(Animal p, double[] newProb, double[] oldProb){

@@ -2,9 +2,14 @@ package sim.app.pvpEmo;
 
 public class Sadness extends Emotion{
 
-	Sadness(int negative, Animal p){
-		super();
-		type = negative;
+	Sadness(Animal p)
+	{
+		type = -1;
+		updateSadness(p);
+	}
+	
+	protected Sadness updateSadness(Animal p)
+	{
 		amount = ((double)p.lastSocial/p.maxSocial);
 		
 		//Calculates sadness 
@@ -20,6 +25,8 @@ public class Sadness extends Emotion{
 			amount = 1.0;
 		//System.out.println("Sadness: " + amount);
 		//System.out.println("Last Social: " + p.lastSocial + " MaxSocial: " + p.maxSocial);
+		
+		return this;
 		
 	}
 }
